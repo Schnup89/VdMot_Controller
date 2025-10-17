@@ -711,13 +711,13 @@ void CMqtt::publish_valves () {
                 }
                 if (VdmConfig.configFlash.protConfig.protocolFlags.publishSeparate) {
                     // tTarget
-                    if ((lastValveValues[x].tTarget!=PiControl[x].target) || forcePublish || lastValveValues[x].publishTimeOut) {
+                    if (((lastValveValues[x].tTarget!=PiControl[x].target) || forcePublish || lastValveValues[x].publishTimeOut) && !firstPublish) {
                         topicstr[len] = '\0';
                         strlcat(topicstr, "/tTarget",sizeof(topicstr));
                         publishValue(topicstr, (char*) (String(PiControl[x].target,1)).c_str(), sizeof(topicstr));
                         lastValveValues[x].tTarget=PiControl[x].target;
                     }
-                    // tTarget
+                    // tValue
                     if ((lastValveValues[x].tValue!=PiControl[x].value) || forcePublish || lastValveValues[x].publishTimeOut) {
                         topicstr[len] = '\0';
                         strlcat(topicstr, "/tValue",sizeof(topicstr));
